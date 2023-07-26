@@ -1,7 +1,7 @@
 
 const gameboardModule = (() => {
     
-    const gameboard = [" "," "," "," "," "," "];
+    const gameboard = [" "," "," "," "," "," "," "," "," "];
     const addToBoard = (symbol, position) => gameboard[position-1] = symbol;
     return {addToBoard, gameboard}
 
@@ -27,10 +27,26 @@ function selectPosition(currentPosition) {
     let positionID = currentPosition.getAttribute('data-id')
     const pos = document.getElementById(positionID)
     console.log(positionID)
-    gameboardModule.addToBoard('X', positionID)
-    
+
     let content = document.createTextNode("X");
-    pos.appendChild(content);
+
+    checkPosition(positionID) ? pos.appendChild(content) : pos.appendChild(" ")
+    
     console.log(gameboardModule.gameboard)
     
+}
+
+function checkPosition(positionToCheck) {
+
+    if (gameboardModule.gameboard[positionToCheck-1] == " "){
+        gameboardModule.addToBoard('X', positionToCheck)
+        console.log(true)
+        return true
+
+    } 
+    else {
+        console.log(false)
+        return false
+
+    }
 }
