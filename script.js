@@ -8,8 +8,7 @@ const gameboardModule = (() => {
 })();
 
 
-// const gameController = (() => {
-
+// 
 //     makemove
 //     updateboard
 //     playersturn
@@ -22,31 +21,47 @@ const gameboardModule = (() => {
 
 // }
 
-function selectPosition(currentPosition) {
- 
-    let positionID = currentPosition.getAttribute('data-id')
-    const pos = document.getElementById(positionID)
-    console.log(positionID)
+const gameController = ( function() {
 
-    let content = document.createTextNode("X");
+    const box = document.querySelectorAll('.box')
 
-    checkPosition(positionID) ? pos.appendChild(content) : pos.appendChild(" ")
+    box.forEach(element => {
+        element.addEventListener('click', function(){
+            console.log('works')
+        })
+    });
     
-    console.log(gameboardModule.gameboard)
+    // 
+
+    function selectPosition(currentPosition) {
     
-}
+        let positionID = currentPosition.getAttribute('data-id')
+        const pos = document.getElementById(positionID)
+        console.log(positionID)
 
-function checkPosition(positionToCheck) {
+        let content = document.createTextNode("X");
 
-    if (gameboardModule.gameboard[positionToCheck-1] == " "){
-        gameboardModule.addToBoard('X', positionToCheck)
-        console.log(true)
-        return true
-
-    } 
-    else {
-        console.log(false)
-        return false
-
+        checkPosition(positionID) ? pos.appendChild(content) : pos.appendChild(" ")
+        
+        console.log(gameboardModule.gameboard)
+        
     }
-}
+
+    function checkPosition(positionToCheck) {
+
+        if (gameboardModule.gameboard[positionToCheck-1] == " "){
+            gameboardModule.addToBoard('X', positionToCheck)
+            console.log(true)
+            return true
+
+        } 
+        else {
+            console.log(false)
+            return false
+
+        }
+    }
+
+
+
+})();
