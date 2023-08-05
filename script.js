@@ -8,30 +8,56 @@ const gameboardModule = (() => {
 })();
 
 
-// 
-//     makemove
-//     updateboard
-//     playersturn
-//     gameover
+const player = (name, symbol) => {
+     
+    return {name, symbol}
 
-// })();
+}
 
-// const player = (name, symbol) => {
-//     const move()
+const gameController = (() => {
 
-// }
+    //CREATE PLAYERS
+    const player1 = player('p1', 'X')
+    const player2 = player('p1', 'Y')
 
-const gameController = ( function() {
+    
+    
+   
+
+
+    //WHO'S TURN IS IT
+    const playersTurn = (count) => {
+
+        if (count % 2 == 0){
+            const currentSymbol = 'X'
+            console.log(currentSymbol)
+        }
+        else {
+            const currentSymbol = 'O'
+            console.log(currentSymbol)
+
+        }
+
+    }
+    
+    //WHILE THE GAME HAS NOT ENDED KEEP CHECKIN PLAYERS TURN
+    
 
     const box = document.querySelectorAll('.box')
 
+    let turnCount = 0
+    //If one of our boxes is selected by the user
     box.forEach(element => {
+
         element.addEventListener('click', function(){
-            console.log('works')
+            playersTurn(turnCount);
+            turnCount += 1
         })
     });
+
+
+
     
-    // 
 
     function selectPosition(currentPosition) {
     
