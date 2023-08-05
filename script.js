@@ -31,13 +31,16 @@ const gameController = (() => {
         if (count % 2 == 0){
             const currentSymbol = 'X'
             console.log(currentSymbol)
+            return currentSymbol
+
         }
         else {
             const currentSymbol = 'O'
             console.log(currentSymbol)
+            return currentSymbol
+
 
         }
-
     }
     
     //WHILE THE GAME HAS NOT ENDED KEEP CHECKIN PLAYERS TURN
@@ -49,9 +52,19 @@ const gameController = (() => {
     //If one of our boxes is selected by the user
     box.forEach(element => {
 
+
         element.addEventListener('click', function(){
-            playersTurn(turnCount);
+            
+            console.log(element)
+            let boxPosition = element.getAttribute('id')
+
+            let playerSymbol = playersTurn(turnCount);
+
+            
+            selectPosition(boxPosition, playerSymbol)
+
             turnCount += 1
+            
         })
     });
 
@@ -59,15 +72,15 @@ const gameController = (() => {
 
     
 
-    function selectPosition(currentPosition) {
+    function selectPosition(currentPosition, currentSymbol) {
     
-        let positionID = currentPosition.getAttribute('data-id')
-        const pos = document.getElementById(positionID)
-        console.log(positionID)
+        // let positionID = currentPosition.getAttribute('data-id')
+        const position = document.getElementById(currentPosition)
+        console.log()
 
-        let content = document.createTextNode("X");
+        let symbol = document.createTextNode(currentSymbol);
 
-        checkPosition(positionID) ? pos.appendChild(content) : pos.appendChild(" ")
+        checkPosition(currentPosition) ? position.appendChild(symbol) : position.appendChild(" ")
         
         console.log(gameboardModule.gameboard)
         
