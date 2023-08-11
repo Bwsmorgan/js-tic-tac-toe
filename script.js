@@ -48,7 +48,7 @@ const gameController = (() => {
                 let boxPosition = element.getAttribute('id')
                 //based on the turn we can determine what symbol's turn it is to play
                 let playerSymbol = playersTurn(turnCount)
-                console.log(`this is playerSymbol ${playerSymbol}`)
+                console.log(`THIS PLAYER SYMBOL IS: ${playerSymbol}`)
                 selectPosition(boxPosition, playerSymbol)
     
                 turnCount += 1    
@@ -85,8 +85,10 @@ const gameController = (() => {
         //every() stops iterating through the array whenever the callback function returns a falsy value
         gameboardModule.winningCombinations.every( winPattern => {
             console.log(`WIN PATTERN!: ${winPattern}`)
-            checkForMatch(winPattern)
-            
+            if (checkForMatch(winPattern)){
+                return false
+            }
+            return true
         })
     }
 
@@ -108,6 +110,10 @@ const gameController = (() => {
     //WHILE THE GAME HAS NOT ENDED KEEP CHECKIN PLAYERS TURN
     const checkForMatch = pattern => {
 
+        // console.log('1')
+        // return true
+
+
         console.log(pattern)
         var xcount = 0
         var ocount = 0
@@ -123,28 +129,33 @@ const gameController = (() => {
             else if (gameboardModule.gameboard[currentMatchIndex] == 'X'){
                 xcount += 1;
             }
+
         }
 
+        return ((xcount == 3 || ocount == 3) ? gameOver(playersTurn(turnCount)) : false)
+    
         
-        console.log(`xcount: ${xcount}`)
-        console.log(`ocount: ${ocount}`)
+        
+        // console.log(`xcount: ${xcount}`)
+        // console.log(`ocount: ${ocount}`)
 
 
-        if (xcount == 3) {
+        // if (xcount == 3) {
            
-            return gameOver(playersTurn(turnCount))
-        }
+        //     return gameOver(playersTurn(turnCount))
+        // }
 
-        else if (ocount == 3){
+        // else if (ocount == 3){
 
-            return gameOver(playersTurn(turnCount))
-        }
+        //     return gameOver(playersTurn(turnCount))
+        // }
 
-        else if (!gameboardModule.gameboard.includes(' ')) { 
-            return gameOver(playersTurn('Draw'))
+        // else if (!gameboardModule.gameboard.includes(' ')) { 
+        //     return gameOver(playersTurn('Draw'))
             
 
-        }
+        // }
+        // return true
      
         
     }
@@ -165,7 +176,7 @@ const gameController = (() => {
 
         //if count is never 3 and the game is full the draw game
         console.log(win)
-        return false
+        return true
 
     }
 
