@@ -83,13 +83,39 @@ const gameController = (() => {
 
         //Once it is confirmed that the postion selected is valid me must check if a winning combination has been satisfied after this position has been selected   
         //every() stops iterating through the array whenever the callback function returns a falsy value
+        var declaredWinner = false
+
         gameboardModule.winningCombinations.every( winPattern => {
+            
             console.log(`WIN PATTERN!: ${winPattern}`)
+            // console.log("enter while")
+            //true means we have a match pattern
             if (checkForMatch(winPattern)){
+
+                declaredWinner = true
+                gameOver(playersTurn(turnCount))
                 return false
+                
+                
+            // else if (checkForMatch(winPattern)){
+
+            // }
+            //     return true
+            //     if(!gameboardModule.gameboard.includes(' ')){
+            //         return false
+            //     }
+                
             }
             return true
+            //if our gameboard does not include an empty string it means the game is over and a winner has not been determined thus it is a draw
+
         })
+
+        if (!gameboardModule.gameboard.includes(' ') && declaredWinner == false){
+            gameOver("Draw")
+        }
+
+        
     }
 
     function checkPosition(positionToCheck, symbolToPlace) {
@@ -132,7 +158,7 @@ const gameController = (() => {
 
         }
 
-        return ((xcount == 3 || ocount == 3) ? gameOver(playersTurn(turnCount)) : false)
+        return ((xcount == 3 || ocount == 3) ? true : false)
     
         
         
