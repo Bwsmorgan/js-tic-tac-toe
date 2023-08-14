@@ -159,30 +159,6 @@ const gameController = (() => {
         }
 
         return ((xcount == 3 || ocount == 3) ? true : false)
-    
-        
-        
-        // console.log(`xcount: ${xcount}`)
-        // console.log(`ocount: ${ocount}`)
-
-
-        // if (xcount == 3) {
-           
-        //     return gameOver(playersTurn(turnCount))
-        // }
-
-        // else if (ocount == 3){
-
-        //     return gameOver(playersTurn(turnCount))
-        // }
-
-        // else if (!gameboardModule.gameboard.includes(' ')) { 
-        //     return gameOver(playersTurn('Draw'))
-            
-
-        // }
-        // return true
-     
         
     }
 
@@ -197,16 +173,31 @@ const gameController = (() => {
         const xomessage = `Congrats player ${winner} is the winner!`
 
 
-        const win = winner == "Draw" ? popUpMsg.append(`${drawmessage}`) : popUpMsg.append(`${xomessage}`)
+        winner == "Draw" ? popUpMsg.append(`${drawmessage}`) : popUpMsg.append(`${xomessage}`)
 
-
-        //if count is never 3 and the game is full the draw game
-        console.log(win)
         return true
-
     }
 
 
+    document.getElementById('newGame').addEventListener('click', () => {
+
+        console.log('works')
+        //Reset gameboard
+        gameboardModule.gameboard = [" "," "," "," "," "," "," "," "," "]
+        //Clear gameboard
+        const eachBox = document.querySelectorAll(".box")
+        //remove all entries from the gameboard
+        eachBox.forEach(e => {     
+            e.innerHTML = ' '
+        })
+        //reset the turn count to 0
+        turnCount = 0
+        //remove the modal
+        gameOver.popUp.style.display = "none"
+
+    })
+
+    
    
 
    

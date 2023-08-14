@@ -12,9 +12,11 @@ body {
     grid-template-rows: 100px 100px 100px ;
 }
 
-.gameboard-container > div {
+.box{
     border: solid black 1px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #gameOver {
@@ -33,7 +35,6 @@ body {
 }
 
 #newGame {
-
     width: 200px;
     height: 40px;
 }
