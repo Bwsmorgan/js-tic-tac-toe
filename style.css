@@ -4,10 +4,14 @@ body {
     align-items: center;
 }
 
+h2 {
+    margin-top: 80px;
+}
+
 .gameboard-container {
     border-style: none;
     display: grid;
-    margin-top: 5%;
+    margin-top: 20px;
     grid-template-columns: repeat(3, 100px) ;
     grid-template-rows: 100px 100px 100px ;
 }
@@ -22,9 +26,10 @@ body {
 #gameOver {
     display: none;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    background-color: rgba(255, 235, 205, 0.484);
-    border: solid red 1px;
+    background-color: rgba(41, 149, 203, 0.985);
+    border: none;
     border-radius: 20px;
     position: absolute;
     transform: translate(-50%, -50%); 
@@ -34,7 +39,19 @@ body {
     height: 200px;
 }
 
+#gameOver > #gameOver-Msg {
+    padding: 10px;
+}
+
 #newGame {
+    padding: 10px;
+    border-radius: 10px;
+    border: solid black 1px;
     width: 200px;
     height: 40px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+#newGame:hover {
+    background-color: rgba(45, 105, 136, 0.985);
 }

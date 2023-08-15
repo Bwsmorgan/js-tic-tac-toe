@@ -1,7 +1,7 @@
 
 const gameboardModule = (() => {
     
-    const gameboard = [" "," "," "," "," "," "," "," "," "];
+    let gameboard = [" "," "," "," "," "," "," "," "," "];
     const addToBoard = (symbol, position) => gameboard[position-1] = symbol;
     const winningCombinations = [
         [0,1,2],
@@ -32,30 +32,6 @@ const gameController = (() => {
     const player1 = player('p1', 'X')
     const player2 = player('p1', 'O')
 
-    //Query all divs with the class box, each of which represents a free space on the gameboard
-    const box = document.querySelectorAll('.box')
-
-    var turnCount = 0
-    var gameSwitch = true
-    //If one of our boxes is selected by the user
-    box.forEach(element => {
-
-        element.addEventListener('click', function(){
-
-            //so long as game switch is true we can make selections
-            if (gameSwitch == true) {
-                //The position of each box cooresponds to its respective id
-                let boxPosition = element.getAttribute('id')
-                //based on the turn we can determine what symbol's turn it is to play
-                let playerSymbol = playersTurn(turnCount)
-                console.log(`THIS PLAYER SYMBOL IS: ${playerSymbol}`)
-                selectPosition(boxPosition, playerSymbol)
-    
-                turnCount += 1    
-            }
-        })
-    });
-
     //WHO'S TURN IS IT
     const playersTurn = (count) => {
 
@@ -69,87 +45,97 @@ const gameController = (() => {
         }   
     }
 
+    //Query all divs with the class box, each of which represents a free space on the gameboard
+    const box = document.querySelectorAll('.box')
+
+    let turnCount = 0
+    let gameSwitch = true
+    //If one of our boxes is selected by the user
+    box.forEach(element => {
+
+        element.addEventListener('click', function(){
+
+            //so long as game switch is true we can make selections
+            if (gameSwitch == true) {
+                //The position of each box cooresponds to its respective id
+                
+                let boxPosition = element.getAttribute('id')
+                // let position = document.getElementById(boxPosition)
+                //based on the turn we can determine what symbol's turn it is to play
+                let playerSymbol = playersTurn(turnCount)
+                console.log(`THIS PLAYER SYMBOL IS: ${playerSymbol}`)
+                console.log(boxPosition)
+                const pos = checkPosition(boxPosition, playerSymbol) ? selectPosition(boxPosition, playerSymbol) : element.appendChild(" ")
+
+                console.log(`pos: ${pos}`)
+                turnCount += 1    
+            }
+        })
+    });
+
+
+    function checkPosition(positionToCheck, symbolToPlace) {
+
+        if (gameboardModule.gameboard[positionToCheck-1] == " "){
+
+            gameboardModule.addToBoard(symbolToPlace, positionToCheck)
+            console.log(gameboardModule.gameboard)
+            return true
+        } else {
+            console.log(false)
+            return false
+        }
+    }
+
+
 
     function selectPosition(currentPosition, currentSymbol) {
     
-        const position = document.getElementById(currentPosition)
+        let position = document.getElementById(currentPosition)
         let symbol = document.createTextNode(currentSymbol);
-
-        //if the gameboard has positions open to be selected
-        // if (gameboardModule.gameboard.includes(' ')) {
-
-        //Each time the user selects a position we must check if the position is taken 
-        checkPosition(currentPosition, currentSymbol) ? position.appendChild(symbol) : position.appendChild(" ")
-
+        
+        position.appendChild(symbol)
         //Once it is confirmed that the postion selected is valid me must check if a winning combination has been satisfied after this position has been selected   
         //every() stops iterating through the array whenever the callback function returns a falsy value
-        var declaredWinner = false
+        let declaredWinner = false
 
-        gameboardModule.winningCombinations.every( winPattern => {
+        //When a new position is selected we review the gameboard and determine if a match is made
+        gameboardModule.winningCombinations.forEach( winPattern => {
             
             console.log(`WIN PATTERN!: ${winPattern}`)
             // console.log("enter while")
             //true means we have a match pattern
             if (checkForMatch(winPattern)){
-
-                declaredWinner = true
-                gameOver(playersTurn(turnCount))
-                return false
-                
-                
-            // else if (checkForMatch(winPattern)){
-
-            // }
-            //     return true
-            //     if(!gameboardModule.gameboard.includes(' ')){
-            //         return false
-            //     }
-                
+                declaredWinner = gameOver(playersTurn(turnCount))
             }
-            return true
-            //if our gameboard does not include an empty string it means the game is over and a winner has not been determined thus it is a draw
-
         })
 
+        //a full gameboard but no declared winner means there is a draw
         if (!gameboardModule.gameboard.includes(' ') && declaredWinner == false){
             gameOver("Draw")
         }
-
-        
+        // console.log(declaredWinner)
+        // declaredWinner = false
+        // console.log(declaredWinner)
+        return declaredWinner
     }
 
-    function checkPosition(positionToCheck, symbolToPlace) {
-
-        if (gameboardModule.gameboard[positionToCheck-1] == " "){
-            gameboardModule.addToBoard(symbolToPlace, positionToCheck)
-            return true
-
-        } 
-        else {
-            console.log(false)
-            return false
-
-        }
-    }
-    
 
     //WHILE THE GAME HAS NOT ENDED KEEP CHECKIN PLAYERS TURN
     const checkForMatch = pattern => {
 
-        // console.log('1')
-        // return true
-
-
         console.log(pattern)
-        var xcount = 0
-        var ocount = 0
+        let xcount = 0
+        let ocount = 0
 
-        //iterate through each in winningCombinations
+        //iterate through each index value in winningCombinations
         for (i in pattern) {
-
+        
+            //the value in the pattern 
             let currentMatchIndex = pattern[i]
-
+        
             if (gameboardModule.gameboard[currentMatchIndex] == 'O'){
+        
                 ocount += 1;
             }
             else if (gameboardModule.gameboard[currentMatchIndex] == 'X'){
@@ -157,15 +143,17 @@ const gameController = (() => {
             }
 
         }
-
-        return ((xcount == 3 || ocount == 3) ? true : false)
+        console.log(`xcount ${xcount}`)
+        console.log(`ocount ${ocount}`)
+        return xcount == 3 || ocount == 3 ? true : false
         
     }
 
+    const popUp = document.querySelector("#gameOver")
 
     const gameOver = winner => {
         //create a pop up to restart game and active buttons
-        const popUp = document.querySelector("#gameOver")
+        
         popUp.style.display = "flex"
         const popUpMsg = popUp.querySelector('#gameOver-Msg')
          
@@ -181,9 +169,9 @@ const gameController = (() => {
 
     document.getElementById('newGame').addEventListener('click', () => {
 
-        console.log('works')
         //Reset gameboard
-        gameboardModule.gameboard = [" "," "," "," "," "," "," "," "," "]
+        console.log(gameboardModule.gameboard)
+        
         //Clear gameboard
         const eachBox = document.querySelectorAll(".box")
         //remove all entries from the gameboard
@@ -192,18 +180,13 @@ const gameController = (() => {
         })
         //reset the turn count to 0
         turnCount = 0
+        gameSwitch = true
         //remove the modal
-        gameOver.popUp.style.display = "none"
+        popUp.style.display = "none"
+        location.reload()
+    
 
     })
 
     
-   
-
-   
-
-
-
-    
-
 })();
