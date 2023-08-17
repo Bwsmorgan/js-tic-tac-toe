@@ -1,3 +1,8 @@
+* {
+    font-family: 'Noto Sans', sans-serif;
+
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -23,12 +28,22 @@ h2 {
     align-items: center;
 }
 
-#gameOver {
+
+players-names{
+   
+    gap: 40px;
+}
+
+players-names > span{
+    gap:20px;
+}
+
+#endGame {
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(41, 149, 203, 0.985);
+    background-color: rgba(41, 149, 203, 0.943);
     border: none;
     border-radius: 20px;
     position: absolute;
@@ -39,19 +54,76 @@ h2 {
     height: 200px;
 }
 
-#gameOver > #gameOver-Msg {
-    padding: 10px;
+#startGame {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(41, 149, 203, 0.943);
+    border: none;
+    border-radius: 20px;
+    position: absolute;
+    transform: translate(-50%, -50%); 
+    left: 50%;
+    top: 55.85%;
+    width: 500px;
+    height: 300px;
+    gap: 15px;
 }
 
-#newGame {
+#startGame > span > input {
+    padding-left: 7px;
+    margin-left: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    border: black solid 1px;
+    border-radius: 5px;
+}
+
+#x-symbol:hover, 
+#o-symbol:hover{
+    background-color: rgba(17, 102, 145, 0.985);
+    border: none;
+}
+
+#endGame > #gameOver-Msg {
     padding: 10px;
+   
+}
+
+#startGameBtn { 
     border-radius: 10px;
-    border: solid black 1px;
+    border: solid rgba(0, 0, 0, 0.985) 1px;
     width: 200px;
     height: 40px;
     background-color: rgba(255, 255, 255, 0);
 }
 
-#newGame:hover {
-    background-color: rgba(45, 105, 136, 0.985);
+#restartGameBtn {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    border: solid rgba(0, 0, 0, 0.985) 1px;
+    width: 200px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0);
+    
+
+    
 }
+
+#newGameBtn {
+    padding: 10px;
+    border-radius: 10px;
+    border: solid rgba(17, 102, 145, 0.985) 1.5px;
+    width: 200px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+#newGameBtn:hover,
+#restartGameBtn:hover,
+#startGameBtn:hover {
+    background-color: rgba(17, 102, 145, 0.985);
+    border: none;
+}
+

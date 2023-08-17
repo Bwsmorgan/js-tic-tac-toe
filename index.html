@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Pacifico&family=Roboto:ital,wght@0,100;0,300;0,500;1,300&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <h2>Tic-Tac-Toe</h2>
+
+    <div id="players-names">
+        <span id="first-player-name">Player X: </span>&nbsp
+        <span id="second-player-name">Player O: </span>
+    </div>
 
     <div class="gameboard-container">
 
@@ -24,11 +33,23 @@
 
     </div>
 
-    <div id="gameOver">
-        
+    <div id="startGame">
+        Please enter player names: 
+        <span >Player X: <input id="player-x-name" type="text"></span>
+        <span >Player O: <input id="player-o-name" type="text"></span>
+        <button id="startGameBtn">Start Game</button>
+        <div style="font-size: small;">*Player X starts game</div>
+    </div>
+
+    <div id="endGame">
         Game Over!
         <div id="gameOver-Msg"></div>
-        <button id="newGame">New Game</button>
+        <button id="newGameBtn">New Game</button>
+    </div>
+
+    <div id="restartGame">
+        <div id="gameOver-Msg"></div>
+        <button id="restartGameBtn">Restart Game</button>
     </div>
 
 

@@ -28,22 +28,62 @@ const player = (name, symbol) => {
 
 const gameController = (() => {
 
-    //CREATE PLAYERS
-    const player1 = player('p1', 'X')
-    const player2 = player('p1', 'O')
+    const startGameBtn = document.getElementById("startGameBtn")
+    const firstNameSpan = document.getElementById("first-player-name")
+    const secondNameSpan = document.getElementById("second-player-name")
+
+    startGameBtn.addEventListener('click', () => {
+
+         
+        const playerX = document.querySelector("#player-x-name").value == '' ? 'Player 1' : document.querySelector("#player-x-name").value
+        const playerO = document.querySelector("#player-o-name").value == '' ? 'Player 2' : document.querySelector("#player-o-name").value
+
+        
+        firstNameSpan.innerHTML += playerX
+        firstNameSpan.style.color = "rgb(82, 9, 115)"
+            
+
+        secondNameSpan.innerHTML += playerO
+
+        const startGameBox = document.getElementById("startGame")
+        startGameBox.style.display = "none"
+
+        //CREATE PLAYERS
+        const player1 = player(playerX,"X")
+        const player2 = player(playerO,"O")
+
+
+        console.log(playerX)
+        console.log(playerO)
+        console.log(player1)
+        console.log(player2)
+
+    })
+
+    
+   
 
     //WHO'S TURN IS IT
     const playersTurn = (count) => {
 
         if (count % 2 == 0){
+            console.log("purple")
             const currentSymbol = 'X'
+            firstNameSpan.style.color = "black"
+            secondNameSpan.style.color = "rgba(17, 102, 145, 0.985)"
             return currentSymbol
         }
         else {
             const currentSymbol = 'O'
+            firstNameSpan.style.color = "rgb(82, 9, 115)"
+            secondNameSpan.style.color = "black"
             return currentSymbol
         }   
     }
+
+    const restartBtn = document.getElementById("restartGameBtn")
+
+    restartBtn.addEventListener('click', ()=>{location.reload()})
 
     //Query all divs with the class box, each of which represents a free space on the gameboard
     const box = document.querySelectorAll('.box')
@@ -77,7 +117,6 @@ const gameController = (() => {
     function checkPosition(positionToCheck, symbolToPlace) {
 
         if (gameboardModule.gameboard[positionToCheck-1] == " "){
-
             gameboardModule.addToBoard(symbolToPlace, positionToCheck)
             console.log(gameboardModule.gameboard)
             return true
@@ -92,8 +131,13 @@ const gameController = (() => {
     function selectPosition(currentPosition, currentSymbol) {
     
         let position = document.getElementById(currentPosition)
-        let symbol = document.createTextNode(currentSymbol);
+        let symbol = document.createTextNode(currentSymbol)
+
+        console.log(`yes: ${currentSymbol == 'X'}`)
+        console.log(`yes: ${currentSymbol == 'O'}`)
         
+        currentSymbol == 'X' ? position.style.color = "rgb(82, 9, 115)" : position.style.color = "rgba(17, 102, 145, 0.985)"
+
         position.appendChild(symbol)
         //Once it is confirmed that the postion selected is valid me must check if a winning combination has been satisfied after this position has been selected   
         //every() stops iterating through the array whenever the callback function returns a falsy value
@@ -149,7 +193,7 @@ const gameController = (() => {
         
     }
 
-    const popUp = document.querySelector("#gameOver")
+    const popUp = document.querySelector("#endGame")
 
     const gameOver = winner => {
         //create a pop up to restart game and active buttons
@@ -167,7 +211,7 @@ const gameController = (() => {
     }
 
 
-    document.getElementById('newGame').addEventListener('click', () => {
+    document.getElementById('newGameBtn').addEventListener('click', () => {
 
         //Reset gameboard
         console.log(gameboardModule.gameboard)
