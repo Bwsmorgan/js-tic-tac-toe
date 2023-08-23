@@ -21,6 +21,8 @@ const gameboardModule = (() => {
 
 
 const player = (name, symbol) => {
+
+    getPlayerName : name;
      
     return {name, symbol}
 
@@ -53,6 +55,7 @@ const gameController = (() => {
         const player2 = player(playerO,"O")
 
 
+        console.log(`name: ${player1.name}`)
         console.log(playerX)
         console.log(playerO)
         console.log(player1)
@@ -67,7 +70,6 @@ const gameController = (() => {
     const playersTurn = (count) => {
 
         if (count % 2 == 0){
-            console.log("purple")
             const currentSymbol = 'X'
             firstNameSpan.style.color = "black"
             secondNameSpan.style.color = "rgba(17, 102, 145, 0.985)"
@@ -129,6 +131,8 @@ const gameController = (() => {
 
 
     function selectPosition(currentPosition, currentSymbol) {
+
+        // console.log(`name: ${player1.name}`)
     
         let position = document.getElementById(currentPosition)
         let symbol = document.createTextNode(currentSymbol)
@@ -213,6 +217,7 @@ const gameController = (() => {
 
     document.getElementById('newGameBtn').addEventListener('click', () => {
 
+    
         //Reset gameboard
         console.log(gameboardModule.gameboard)
         
